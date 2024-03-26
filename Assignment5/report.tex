@@ -1,0 +1,96 @@
+\documentclass{article}
+
+% Language setting
+% Replace `english' with e.g. `spanish' to change the document language
+\usepackage[english]{babel}
+
+% Set page size and margins
+% Replace `letterpaper' with`a4paper' for UK/EU standard size
+\usepackage[letterpaper,top=2cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+% Useful packages
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
+
+\title{Developing Strategies for the Bidding Card Game 'Diamonds' with GenAI}
+\author{Shreya Sinha}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+Diamonds is a two-player, trick-taking card game with a unique twist. Players are dealt a single suit (Spades, Hearts, or Clubs) and compete for un-shuffled Diamonds with point values (could be anything but took 5 in the code for simplicity) that act as trump cards. Bidding and winning tricks are based solely on card rank within a player's hand, making strategic card selection crucial. This report explores the development of strategies for Diamonds using Generative Artificial Intelligence (GenAI).
+
+\section{Methodology}
+\subsection{Teaching GenAI the Game}
+
+GenAI was provided with a detailed description of the Diamonds game rules, including:
+\begin{itemize}
+    \item Deck setup (single suit per player, separate un-shuffled Diamond deck)
+    \item Dealing and bidding process (players take turns bidding a card, highest rank wins)
+    \item Trick resolution (winner takes revealed Diamond, discards played cards)
+    \item Winning condition (player with the most points from collected Diamonds wins)
+\end{itemize}
+\textbf{Initial Challenges in Conversation}
+\begin{enumerate}
+    \item \textbf{Misunderstanding of Key Rules:} GenAI initially did not understand key rules such as the scoring rules (for eg. if the player cards will be included in the points), if the cards will be shuffled or not, which cards will be kept face down and which face up, etc.
+    \item \textbf{Explaining Game Setup:} Explaining the overall structure of the game, such as the number of cards each player has, the fact that the suit of the cards did not matter and all non-diamond cards need to be treated similarly, etc was a challenge.
+\end{enumerate}
+
+\textbf{Addressing The Issue}
+To address this issue, GenAI was asked to generate a clearer description of the game itself after a significant amount of conversation and clarifications. This description was then used in a new chat altogether, to generate better, less buggy code. 
+
+\subsection{Prompting and Iterating on Strategy}
+GenAI was prompted to develop bidding strategies for the computer player, focusing on:
+\begin{itemize}
+    \item High-value Diamonds: Play the highest card when possible.
+    \item Low-value Diamonds: Play a low card to potentially lose gracefully.
+    \item Mid-range Diamonds (2-4): Explore bluffing or strategic play.
+\end{itemize}
+GenAI generated several strategies, including prioritizing high cards for consistent wins and bluffing with mid-range cards when the revealed Diamond is high-value. These strategies were iterated, and prompts refined to achieve a balance between aggressive and safe play.
+
+
+\subsection{Code Implementation}
+
+Three strategies were implemented in code: "Prioritize High Cards" being a safe and effective option. "Bluff with Mid-Range Diamonds" more aggressive which could lead to quick wins but also carried a higher risk of losing tricks and finally "Calculated Risk" which offered a balance between playing it safe and taking calculated risks.
+
+\section{Reflections}
+\subsection{Reflections on Conversation with GenAI}
+\begin{enumerate}
+    \item While initial difficulties exposed reliablity on human intervention while trying to code using GenAI, it also gave insights on the potential of AI to learn and generate code based on clear instructions.Thus, detailed explanations and debugging are crucial for successful collaboration.
+    \item Prompting GenAI with specific scenarios and desired behaviors (e.g., prioritizing high cards, bluffing with mid-range) proved effective in guiding strategy development.
+    \item It was easier to generate desired output when every requirement was laid out step-by-step (such as first focusing on game structure and later on strategy after fully debugging initial code)
+\end{enumerate}
+
+\subsection{Reflections on Code that was Generated}
+
+The generated Python code showcased GenAI's capability to translate strategies into partially functional code snippets which worked well after debugging. The link to the colab file can be found in Appendix B.
+
+\section{Conclusion}
+
+This project demonstrates the potential of GenAI in developing game-playing AI with strategic capabilities. The "Calculated Risk" strategy proved effective in winning against human opponents in some cases. However, further exploration is needed:
+\begin{itemize}
+    \item More Complex Strategies: Implement strategies like card counting and risk estimation to estimate remaining cards and adjust bidding accordingly.
+    \item More Complex Rules: With introduction of more complexities into the game, it will be interesting to explore how much more challenging it gets to prompt GenAI to learn them.
+    \item Self-Learning AI: Develop an AI that learns and adapts its strategy through gameplay experience, potentially using reinforcement learning techniques.
+\end{itemize}
+By leveraging GenAI's ability to generate and refine code, we can create increasingly sophisticated opponents for games like Diamonds, leading to more engaging and closer to real game experiences.
+
+
+
+\section{Appendices}
+
+\subsection{Appendix A (Transcript of conversations with GenAI)}
+\begin{itemize}
+    \item Part 1 :  \href{https://g.co/gemini/share/392039361a65}{Gemini Chat 1}
+    \item Part 2 : \href{https://g.co/gemini/share/f798f20cf484}{Gemini Chat 2}
+\end{itemize}
+
+\subsection{Appendix B (Colab file of generated code)}
+\begin{itemize}
+    \item Diamonds Game - \href{https://colab.research.google.com/drive/1B7-SfQCkb1JJ_7puCBvB18ZG_3ihZmv4?usp=sharing}{Diamonds Game Colab}
+\end{itemize}
+
+\end{document}
